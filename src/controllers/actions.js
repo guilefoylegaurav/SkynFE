@@ -2,13 +2,16 @@ export const UploadImage = (imageSrc, navigate) => {
     const data = new FormData()
     data.append("file", imageSrc)
     console.log(data)
-    fetch("upload", {
+    fetch("http://ec2-54-83-121-162.compute-1.amazonaws.com:5000/upload", {
         method: "put",
-        body: data
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({"file": imageSrc})
     })
     .then(res => res.json())
     .then(data => {
-        if (data.error) {
+        if (data.error) { 
             console.log("Please add a photograph")
         }
         else {
@@ -23,7 +26,7 @@ export const UploadImage = (imageSrc, navigate) => {
 
 export const putForm = (features, currType, currTone, navigate) => {
     console.log(features, currType, currTone, navigate)
-    fetch("/recommend", {
+    fetch("http://ec2-54-83-121-162.compute-1.amazonaws.com:5000/recommend", {
         method: "put",
         headers: {
             "Content-Type": "application/json",
